@@ -1,5 +1,4 @@
 #!/bin/bash
-# bklyn-KERNEL-BUILD menu
 
 # Variables
 menu_version="v2.3"
@@ -18,7 +17,6 @@ export PATH=$PARENT_DIR/gas/linux-x86:$PATH
 export TARGET_SOC=waipio
 export LLVM=1 LLVM_IAS=1
 export ARCH=arm64
-KERNEL_MAKE_ENV="LOCALVERSION=-BKLYN-Waipio-Gki-Kernel-"
 
 # Color
 ON_BLUE=`echo -e "\033[44m"`	# On Blue
