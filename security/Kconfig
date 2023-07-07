@@ -230,7 +230,6 @@ source "security/loadpin/Kconfig"
 source "security/yama/Kconfig"
 source "security/safesetid/Kconfig"
 source "security/lockdown/Kconfig"
-source "security/samsung/defex_lsm/Kconfig"
 
 source "security/integrity/Kconfig"
 source "security/samsung/five/Kconfig"

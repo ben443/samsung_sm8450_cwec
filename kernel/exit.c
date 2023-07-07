@@ -70,9 +70,6 @@
 #include <asm/mmu_context.h>
 #include <trace/hooks/mm.h>
 
-#ifdef CONFIG_SECURITY_DEFEX
-#include <linux/defex.h>
-#endif
 
 #if defined(CONFIG_MEMORY_ZEROISATION)
 #include <trace/hooks/mz.h>
@@ -736,9 +733,6 @@ void __noreturn do_exit(long code)
 	 * Then do everything else.
 	 */
 
-#ifdef CONFIG_SECURITY_DEFEX
-	task_defex_zero_creds(current);
-#endif
 
 	WARN_ON(blk_needs_flush_plug(tsk));
 
