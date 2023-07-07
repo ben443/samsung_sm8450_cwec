@@ -110,7 +110,7 @@ build_kernel(){
 kernel_su(){
 while true; do
   echo "${BGREEN}***** Add KernelSU? *****${STD}"
-  read  -r -p "Enter choice [y/N] " choice
+  read  -r -p "Enter choice [Y/N] " choice
   case $choice in
   [Yy]* ) curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -; build_kernel;;
   [Nn]* ) build_kernel;;
