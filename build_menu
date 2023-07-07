@@ -92,8 +92,6 @@ clean(){
 build_kernel(){
   variant
   echo "${BGREEN}***** Compiling kernel *****${STD}"
-curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
-sleep 5
   [ ! -d "$OUT_DIR" ] && mkdir $OUT_DIR
   make -j$(nproc) -C $(pwd) O=$(pwd)/out ${VARIANT}_defconfig
   make -j$(nproc) -C $(pwd) O=$(pwd)/out
@@ -107,6 +105,17 @@ sleep 5
   else
     pause 'return to Main menu' 'Kernel STUCK in BUILD!, '
   fi
+}
+
+kernel_su(){
+while true; do
+  echo "${BGREEN}***** Add KernelSU? *****${STD}"
+  read  -r -p "Enter choice [y/N] " choice
+  case $choice in
+  [Yy]* ) curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -; build_kernel;;
+  [Nn]* ) build_kernel;;
+  esac
+done
 }
 
 anykernel3(){
@@ -161,7 +170,7 @@ read_options(){
   local choice
   read -p "Enter choice [ 1 - 4 ] " choice
   case $choice in
-    1|b|B) build_kernel ;;
+    1|b|B) kernel_su ;;
     2|c|C) clean ;;
     3|f|F) anykernel3 ;;
     4|x|X) exit 0 ;;
