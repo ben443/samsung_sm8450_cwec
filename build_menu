@@ -104,6 +104,7 @@ build_kernel(){
     pause 'continue'
   else
     pause 'return to Main menu' 'Kernel STUCK in BUILD!, '
+	. $DIR/build_menu
   fi
 }
 
@@ -147,6 +148,7 @@ anykernel3(){
     pause 'continue'
   else
     pause 'return to Main menu' 'Build kernel first, '
+	. $DIR/build_menu
   fi
 }
 
@@ -158,7 +160,7 @@ build_tools
 # Show menu
 show_menus(){
   clear
-  echo "${ON_BLUE}bklyn-KERNEL-BUILD menu $menu_version${STD}"
+  echo "${ON_BLUE}KERNEL-BUILD menu $menu_version${STD}"
   echo " 1. ${UNDER_LINE}B${STD}uild kernel"
   echo " 2. ${UNDER_LINE}C${STD}lean"
   echo " 3. Make ${UNDER_LINE}f${STD}lashable zip"
