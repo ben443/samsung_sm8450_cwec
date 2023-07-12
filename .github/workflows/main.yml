@@ -18,7 +18,7 @@ jobs:
 
       CCACHE_HARDLINK: "true"
 
-      KERNEL_DEFCONFIG: "defconfig"
+      KERNEL_DEFCONFIG: "arch/arm64/configs/waipio-gki_defconfig"
 
       KERNEL_CMDLINE: "ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- LLVM=1 LLVM_IAS=1 O=out"
 
