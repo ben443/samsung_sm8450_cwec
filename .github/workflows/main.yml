@@ -18,7 +18,7 @@ jobs:
           kernel-url: https://github.com/ben443/samsung_sm8450_cwec
           #kernel-dir: msm-4.19
           kernel-branch: CWEC
-          config: kali_defconfig
+          config: gki_defconfig
           arch: arm64
           aosp-gcc: true
           aosp-clang: true
