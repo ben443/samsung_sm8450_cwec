@@ -11,6 +11,9 @@ jobs:
     permissions:
       contents: read
 
+- name: Run nhfragment.sh (kernel setup)
+  run: bash ./nhfragment.sh
+
     steps:
     - name: Build Kernel
       uses: dabao1955/kernel_build_action@main
