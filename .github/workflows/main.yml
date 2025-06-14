@@ -1,4 +1,3 @@
-# A simple action usage
 name: Build Kernel
 on:
   workflow_dispatch:
@@ -11,23 +10,23 @@ jobs:
     permissions:
       contents: read
 
-- name: Run nhfragment.sh (kernel setup)
-  run: bash ./nhfragment.sh
-
     steps:
+    - name: Run nhfragment.sh (kernel setup)
+      run: bash ./nhfragment.sh
+
     - name: Build Kernel
       uses: dabao1955/kernel_build_action@main
       with:
-          kernel-url: https://github.com/ben443/samsung_sm8450_cwec
-          #kernel-dir: msm-4.19
-          kernel-branch: CWEC
-          config: gki_defconfig gki.config
-          arch: arm64
-          aosp-gcc: true
-          aosp-clang: true
-          ksu: true
-          ksu-version: main
-          android-version: 12
-          aosp-clang-version: r383902
-          disable-lto: true
-          anykernel3: true
+        kernel-url: https://github.com/ben443/samsung_sm8450_cwec
+        #kernel-dir: msm-4.19
+        kernel-branch: CWEC
+        config: gki_defconfig gki.config
+        arch: arm64
+        aosp-gcc: true
+        aosp-clang: true
+        ksu: true
+        ksu-version: main
+        android-version: 12
+        aosp-clang-version: r383902
+        disable-lto: true
+        anykernel3: true
