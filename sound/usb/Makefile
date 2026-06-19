@@ -3,6 +3,7 @@
 # Makefile for ALSA
 #
 
+ccflags-y += -Wno-error
 snd-usb-audio-objs := 	card.o \
 			clock.o \
 			endpoint.o \
