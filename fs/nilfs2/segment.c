@@ -1181,8 +1181,6 @@ static int nilfs_segctor_collect_blocks(struct nilfs_sc_info *sci, int mode)
 						   i_dirty);
 				goto break_or_fail;
 			}
-			/* sci->sc_stage.dirty_file_ptr = NILFS_I(inode); */
-			/* XXX: required ? */
 		}
 		sci->sc_stage.dirty_file_ptr = NULL;
 		if (mode == SC_FLUSH_FILE) {
