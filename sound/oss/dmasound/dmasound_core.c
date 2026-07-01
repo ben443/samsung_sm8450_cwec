@@ -774,7 +774,10 @@ static int sq_open(struct inode *inode, struct file *file)
 	if (rc)
 		goto out;
 	if (file->f_mode & FMODE_READ) {
-		/* TODO: if O_RDWR, release any resources grabbed by write part */
+		if (file->f_mode & FMODE_WRITE) {
+			write_sq_release_buffers();
+			write_sq.busy = 0;
+		}
 		rc = -ENXIO ; /* I think this is what is required by open(2) */
 		goto out;
 	}
