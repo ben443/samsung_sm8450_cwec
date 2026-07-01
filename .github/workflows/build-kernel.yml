@@ -1,0 +1,55 @@
+name: Build SM8450 Patched Kernel
+on:
+  push:
+    branches: [ main, master, CWEC ]
+  workflow_dispatch:
+
+jobs:
+  build-kernel:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Install Linux Build Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bc bison flex libssl-dev make clang lld libelf-dev gcc-aarch64-linux-gnu crossbuild-essential-arm64 git
+
+      - name: Set Up Android Clang Toolchain
+        run: |
+          mkdir -p $GITHUB_WORKSPACE/clang-aosp
+          # Download the prebuilt AOSP Clang toolchain matching the 5.10 GKI reference compiler
+          wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/tags/android-12.1.0_r27/clang-r416183b.tar.gz
+          tar -xzf clang-r416183b.tar.gz -C $GITHUB_WORKSPACE/clang-aosp
+
+      - name: Compile Monolithic Kernel Image
+        run: |
+          export ARCH=arm64
+          export SUBARCH=arm64
+          export PATH=$GITHUB_WORKSPACE/clang-aosp/bin:$PATH
+          export CROSS_COMPILE=aarch64-linux-gnu-
+          export CC=clang
+          export CLANG_TRIPLE=aarch64-linux-gnu-
+          
+          # Clean build tree
+          make clean
+          make mrproper
+          
+          # Identify defconfig to use (fallback to gki_defconfig if vendor specific is missing)
+          if [ -f arch/arm64/configs/gki_defconfig ]; then
+            make gki_defconfig
+          else
+            # Automatically find the first available defconfig if gki_defconfig isn't standard
+            make $(ls arch/arm64/configs/ | head -n 1)
+          fi
+          
+          # Build the core kernel binary
+          make -j$(nproc) Image
+
+      - name: Upload Patched Kernel Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SM8450-BossGT1-Kernel
+          path: arch/arm64/boot/Image
+          if-no-files-found: error
