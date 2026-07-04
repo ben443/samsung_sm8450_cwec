@@ -52,4 +52,22 @@ jobs:
         with:
           name: SM8450-BossGT1-Kernel
           path: arch/arm64/boot/Image
+          if-no-files-found: error          make mrproper
+          
+          # Identify defconfig to use (fallback to gki_defconfig if vendor specific is missing)
+          if [ -f arch/arm64/configs/gki_defconfig ]; then
+            make gki_defconfig
+          else
+            # Automatically find the first available defconfig if gki_defconfig isn't standard
+            make $(ls arch/arm64/configs/ | head -n 1)
+          fi
+          
+          # Build the core kernel binary
+          make -j$(nproc) Image
+
+      - name: Upload Patched Kernel Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SM8450-BossGT1-Kernel
+          path: arch/arm64/boot/Image
           if-no-files-found: error
